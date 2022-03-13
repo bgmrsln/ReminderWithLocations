@@ -163,10 +163,8 @@ fun Task(
 
                 Spacer(modifier = Modifier.height(40.dp))
                 val sdf=  SimpleDateFormat("yyyy/MM/dd hh:mm")
-                var time: Long=0
-                if(reminderTime.value!= ""){
-                    time= sdf.parse(reminderTime.value).getTime()
-                }
+
+
 
                 Button(
                     enabled = true,
@@ -178,7 +176,7 @@ fun Task(
                                     //update time
 
 
-                                    reminderTime = time,
+                                    reminderTime = if(reminderTime.value=="") 0 else sdf.parse(reminderTime.value).getTime(),
                                     creationTime = Date().time ,
                                     //System.currentTimeMillis(),
                                     taskCategoryId = getCategoryId(viewState.categories, category.value),

@@ -105,9 +105,9 @@ private fun setOneTimeNotification(task: Task){
     data.putLong("id", task.taskId)
     //if there is a reminder time : if we enter the task area and reminder time has come there is a notif
     if(task.reminderTime!= null){
-        if(task.taskLocationX!=null&& task.currentLocationX!=null &&
+        if(task.taskLocationX!=-1.0&& task.currentLocationX!=null &&
             abs(task.currentLocationX-task.taskLocationX)<0.08 &&
-            task.taskLocationY!= null && task.currentLocationY!= null&&
+            task.taskLocationY!= -1.0 && task.currentLocationY!= null&&
             abs(task.taskLocationY- task.currentLocationY)<0.08){
 
             val notificationWorker= OneTimeWorkRequestBuilder<NotificationWorker>()
@@ -130,7 +130,7 @@ private fun setOneTimeNotification(task: Task){
                     }
                 }
 
-        }else{
+        }else if (task.taskLocationX==-1.0 && task.taskLocationY == -1.0){
             val notificationWorker= OneTimeWorkRequestBuilder<NotificationWorker>()
                 .setInitialDelay(task.reminderTime-Date().time, TimeUnit.MILLISECONDS)
                 .setConstraints(constraints)
